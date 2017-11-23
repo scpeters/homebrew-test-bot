@@ -472,7 +472,7 @@ module Homebrew
         unless ARGV.include?("--no-pull")
           diff_start_sha1 = current_sha1
           ohai "test brew pull start"
-          test "brew", "pull", "--clean", @url
+          test "brew", "pull", "--verbose", "--debug", "--clean", @url
           ohai "test brew pull done"
           diff_end_sha1 = current_sha1
         end
