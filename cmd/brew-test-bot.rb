@@ -472,6 +472,10 @@ module Homebrew
         unless ARGV.include?("--no-pull")
           diff_start_sha1 = current_sha1
           ohai "test brew pull start"
+          env_out = Utils.popen_read("env")
+          ohai "env #{env_out}"
+          git_config = Utils.popen_read("git", "config", "--global", "-l")
+          ohai "git_config #{git_config}"
           test "brew", "pull", "--verbose", "--debug", "--clean", @url
           ohai "test brew pull done"
           diff_end_sha1 = current_sha1
