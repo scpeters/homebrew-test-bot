@@ -471,7 +471,9 @@ module Homebrew
       elsif @url
         unless ARGV.include?("--no-pull")
           diff_start_sha1 = current_sha1
+          ohai "test brew pull start"
           test "brew", "pull", "--clean", @url
+          ohai "test brew pull done"
           diff_end_sha1 = current_sha1
         end
         @short_url = @url.gsub("https://github.com/", "")
@@ -1224,7 +1226,7 @@ module Homebrew
     pr = ENV["UPSTREAM_PULL_REQUEST"] || ENV["CHANGE_ID"] || ENV["CIRCLE_PR_NUMBER"]
     if pr
       pull_pr = "https://github.com/#{tap.user}/homebrew-#{tap.repo}/pull/#{pr}"
-      safe_system "brew", "pull", "--clean", pull_pr
+      safe_system "brew", "pull", "--verbose", "--debug", "--clean", pull_pr
     end
 
     if ENV["UPSTREAM_BOTTLE_KEEP_OLD"] || ENV["BOT_PARAMS"].to_s.include?("--keep-old") || ARGV.include?("--keep-old")
