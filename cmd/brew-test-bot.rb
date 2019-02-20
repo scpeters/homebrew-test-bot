@@ -508,7 +508,7 @@ module Homebrew
         if core_path.exist?
           if ARGV.include?("--cleanup")
             test "which", "git"
-            test "git", "version"
+            test "git", "--version"
             test "git", "-C", core_path.to_s, "fetch", "--depth=1", "origin"
             test "git", "-C", core_path.to_s, "reset", "--hard", "origin/master"
           end
