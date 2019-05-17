@@ -666,7 +666,16 @@ module Homebrew
       end
       unlink_formulae = conflicts.map(&:name)
       unlink_formulae.uniq.each do |name|
-        unlink_formula = Formulary.factory(name)
+        unlink_formula = begin
+          Formulary.factory(name)
+        rescue TapFormulaUnavailableError => e
+          raise if e.tap.installed?
+
+          e.tap.clear_cache
+          safe_system "brew", "tap", e.tap.name
+          retry
+        end
+
         next unless unlink_formula.installed?
         next unless unlink_formula.linked_keg.exist?
 
