@@ -1185,6 +1185,7 @@ module Homebrew
       Pathname.glob("#{HOMEBREW_PREFIX}/**/*").each do |path|
         next if Keg::MUST_BE_WRITABLE_DIRECTORIES.include?(path)
         next if path == HOMEBREW_PREFIX/"bin/brew"
+        next if path == HOMEBREW_PREFIX/"Frameworks"
         next if path == HOMEBREW_PREFIX/"var"
         next if path == HOMEBREW_PREFIX/"var/homebrew"
 
