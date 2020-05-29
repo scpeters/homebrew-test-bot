@@ -259,7 +259,7 @@ module Homebrew
 
       @formulae += @added_formulae + @modified_formulae
 
-      installed_taps = Tap.select(&:latest_version_installed?).map(&:name)
+      installed_taps = Tap.select(&:installed?).map(&:name)
       (REQUIRED_TAPS - installed_taps).each do |tap|
         test "brew", "tap", tap
       end
