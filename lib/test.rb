@@ -259,7 +259,7 @@ module Homebrew
 
       @formulae += @added_formulae + @modified_formulae
 
-      installed_taps = Tap.select(&:installed?).map(&:name)
+      installed_taps = Tap.select(&:latest_version_installed?).map(&:name)
       (REQUIRED_TAPS - installed_taps).each do |tap|
         test "brew", "tap", tap
       end
@@ -488,7 +488,7 @@ module Homebrew
       return if formula.linked_keg.exist?
 
       conflicts = formula.conflicts.map { |c| Formulary.factory(c.name) }
-                         .select(&:installed?)
+                         .select(&:latest_version_installed?)
       formula_recursive_dependencies = begin
         formula.recursive_dependencies
       rescue TapFormulaUnavailableError => e
@@ -501,7 +501,7 @@ module Homebrew
       formula_recursive_dependencies.each do |dependency|
         conflicts += dependency.to_formula.conflicts.map do |c|
           Formulary.factory(c.name)
-        end.select(&:installed?)
+        end.select(&:latest_version_installed?)
       end
       conflicts.each do |conflict|
         test "brew", "unlink", conflict.name
