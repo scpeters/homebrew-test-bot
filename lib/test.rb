@@ -941,11 +941,11 @@ module Homebrew
         FileUtils.rm_rf path
       end
 
-      if @tap
-        checkout_branch_if_needed(HOMEBREW_REPOSITORY)
-        reset_if_needed(HOMEBREW_REPOSITORY)
-        clean_if_needed(HOMEBREW_REPOSITORY)
-      end
+      #if @tap
+      #  checkout_branch_if_needed(HOMEBREW_REPOSITORY)
+      #  reset_if_needed(HOMEBREW_REPOSITORY)
+      #  clean_if_needed(HOMEBREW_REPOSITORY)
+      #end
 
       Pathname.glob("#{HOMEBREW_LIBRARY}/Taps/*/*").each do |git_repo|
         cleanup_git_meta(git_repo)
